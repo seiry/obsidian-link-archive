@@ -69,6 +69,7 @@ export default class AnotherLinkArchivePlugin extends Plugin {
         });
       }),
     );
+    // https://github.com/obsidianmd/obsidian-api/issues/3#issuecomment-724665569
     // This creates an icon in the left ribbon.
     const ribbonIconEl = this.addRibbonIcon(
       "dice",
