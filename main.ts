@@ -48,9 +48,37 @@ export default class AnotherLinkArchivePlugin extends Plugin {
             .setIcon("link")
             .onClick(async () => {
               // Custom action code here
-              console.log(url);
-              const re = await saveWebpage(url);
-              new Notice(`You clicked: ${url}`);
+              // console.log(url);
+              const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+              if (!view) {
+                return;
+              }
+              const selection = view.editor.getSelection();
+              console.log(selection);
+              const cursor = view.editor.getCursor("anchor");
+              const line = view.editor.getLine(cursor.line);
+              const str2add = "(added url)";
+              // TODO: only the first?
+              // TODO: add a TBD element, for this is a async promise
+              const urlStart = line.indexOf(url);
+              const urlEnd = urlStart + url.length;
+
+              view.editor.replaceRange(
+                `${url} ${str2add}`,
+                {
+                  line: cursor.line,
+                  ch: urlStart,
+                },
+                {
+                  line: cursor.line,
+                  ch: urlEnd,
+                },
+              );
+              //   //   // { line: cursor.line, ch: cursor.ch + url.length },
+              // );
+              // const re = await saveWebpage(url);
+              // console.log(re);
+              // new Notice(`You clicked: ${url}`);
             });
         });
       }),
@@ -114,14 +142,14 @@ export default class AnotherLinkArchivePlugin extends Plugin {
 
     // If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
     // Using this function will automatically remove the event listener when this plugin is disabled.
-    this.registerDomEvent(document, "click", (evt: MouseEvent) => {
-      console.log("click", evt);
-    });
+    // this.registerDomEvent(document, "click", (evt: MouseEvent) => {
+    //   console.log("click", evt);
+    // });
 
-    // When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-    this.registerInterval(
-      window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000),
-    );
+    // // When registering intervals, this function will automatically clear the interval when the plugin is disabled.
+    // this.registerInterval(
+    //   window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000),
+    // );
   }
 
   onunload() {}
