@@ -26,20 +26,6 @@ export default class AnotherLinkArchivePlugin extends Plugin {
   async onload() {
     await this.loadSettings();
 
-    // this.registerEvent(
-    // 	this.app.workspace.on("editor-menu", (menu, editor, view) => {
-    // 		menu.addItem((item) => {
-    // 			item.setTitle("Custom Action")
-    // 				.setIcon("pencil")
-    // 				.onClick(() => {
-    // 					// Custom action code here
-    // 					const selectedText = editor.getSelection();
-    // 					new Notice(`You selected: ${selectedText}`);
-    // 				});
-    // 		});
-    // 	})
-    // );
-
     this.registerEvent(
       this.app.workspace.on("url-menu", (menu, url) => {
         menu.addItem((item) => {
